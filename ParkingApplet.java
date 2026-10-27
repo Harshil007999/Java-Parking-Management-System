@@ -4,18 +4,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /*
- * Run with:  appletviewer ParkingApplet.java
- * (needs JDK 8 - applets were removed from newer Java versions)
- */
-/*
 <applet code="ParkingApplet.class" width="560" height="520">
 </applet>
 */
 
 /**
  * Car Parking Management System - Swing Applet version.
- * Same logic as the console and JFrame versions (10 slots, Rs. 20 per hour).
- * The only big change: an applet has no main(); the screen is built in init().
+ * (10 slots, Rs. 20 per hour).
  */
 public class ParkingApplet extends JApplet {
 
@@ -25,7 +20,7 @@ public class ParkingApplet extends JApplet {
     private final String[] slots = new String[TOTAL_SLOTS];
     private int totalMoney = 0;
 
-    // ---------- GUI components ----------
+    // GUI components
     private final JTextField carNumberField = new JTextField(14);
     private final JSpinner hoursSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 999, 1));
     private final DefaultTableModel tableModel =
@@ -39,7 +34,6 @@ public class ParkingApplet extends JApplet {
     private final JLabel earnedLabel = new JLabel("Total money earned: Rs. 0");
     private final JLabel messageLabel = new JLabel("Welcome! Enter a car number to begin.");
 
-    // ---------- Applet life cycle: init() runs once when the applet loads ----------
     @Override
     public void init() {
         setLayout(new BorderLayout(10, 10));
@@ -51,7 +45,6 @@ public class ParkingApplet extends JApplet {
         refreshTable();
     }
 
-    // ---------- Building the screen ----------
     private JPanel buildTopPanel() {
         JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
@@ -86,7 +79,7 @@ public class ParkingApplet extends JApplet {
         table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        // Green row = empty slot, red row = occupied slot
+
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable t, Object value,
@@ -117,7 +110,7 @@ public class ParkingApplet extends JApplet {
         return panel;
     }
 
-    // ---------- Parking logic (same as the JFrame version) ----------
+    // Parking logic
     private void parkCar() {
         String number = readCarNumber();
         if (number == null) return;
@@ -194,7 +187,6 @@ public class ParkingApplet extends JApplet {
         return -1;
     }
 
-    // ---------- Helpers ----------
     private String readCarNumber() {
         String number = carNumberField.getText().trim().toUpperCase();
         if (number.isEmpty()) {
